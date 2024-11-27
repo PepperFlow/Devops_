@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Väder i {{ weather.city if weather else 'N/A' }}</title>
+</head>
+<body>
+    <h1>Väder i {{ weather.city if weather else 'Okänd stad' }}</h1>
+    <form action="/" method="get">
+        <label for="city">Ange stad:</label>
+        <input type="text" id="city" name="city" placeholder="Ange stad" required>
+        <button type="submit">Visa väder</button>
+    </form>
+
+    <!-- Felmeddelande -->
+    {% if error %}
+        <p style="color: red;">{{ error }}</p>
+    {% endif %}
+
+    <!-- Väderinformation -->
+    {% if weather %}
+        <p>Beskrivning: {{ weather.description }}</p>
+        <p>Temperatur: {{ weather.temperature }}°C</p>
+        <p>Känns som: {{ weather.feels_like }}°C</p>
+        <p>Min: {{ weather.temp_min }}°C, Max: {{ weather.temp_max }}°C</p>
+        <p>Fuktighet: {{ weather.humidity }}%</p>
+        <p>Tryck: {{ weather.pressure }} hPa</p>
+        <p>Vind: {{ weather.wind_speed }} m/s, riktning: {{ weather.wind_deg }}°</p>
+    {% endif %}
+</body>
+</html>
