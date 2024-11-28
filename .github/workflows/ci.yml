@@ -1,7 +1,7 @@
 name: CI/CD Pipeline
 
 on:
-  # Möjliggör manuell körning från GitHub
+  
   workflow_dispatch:
     inputs:
       log_errors:
