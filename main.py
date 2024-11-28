@@ -6,25 +6,25 @@ app = Flask(__name__)
 
 @app.route('/')
 def weather():
-    # Hämta stad från användarens inmatning eller använd Stockholm som standard
+    
     city = request.args.get('city', 'Stockholm')
-    lang = "se"  # Svenska som språk
-    api_key = os.environ.get("API_KEY", "b38ecf570c462b01c29a466698374f46")  # Din API-nyckel
+    lang = "se"  
+    api_key = os.environ.get("API_KEY", "b38ecf570c462b01c29a466698374f46")  
     api = f"http://api.openweathermap.org/data/2.5/weather?q={city}&appid={api_key}&lang={lang}&units=metric"
 
     try:
-        # Anropa OpenWeather API
+        
         result = requests.get(api)
-        result.raise_for_status()  # Kontrollera om svaret innehåller ett fel
+        result.raise_for_status()  
         data = result.json()
     except requests.exceptions.HTTPError:
-        # Om API:et svarar med ett HTTP-fel, t.ex. 404 för ogiltig stad
+        
         return render_template('index.html', error="Staden hittades inte. Försök igen.")
     except requests.exceptions.RequestException as e:
-        # Fångar andra nätverksrelaterade fel
+        
         return render_template('index.html', error="Kunde inte hämta väderdata. Försök senare.")
 
-    # Skapa väderdata från API-svaret
+    
     weather_data = {
         "city": data.get('name', 'N/A'),
         "description": data['weather'][0]['description'],
@@ -38,9 +38,9 @@ def weather():
         "wind_deg": data['wind']['deg']
     }
 
-    # Rendera HTML-mallen och skicka väderdata
+    
     return render_template('index.html', weather=weather_data)
 
-# Kör Flask-applikationen
+
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(host="0.0.0.0", port=3000, debug=True)
