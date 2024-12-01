@@ -1,7 +1,6 @@
 name: CI/CD Pipeline
 
 on:
-  
   workflow_dispatch:
     inputs:
       log_errors:
@@ -40,6 +39,17 @@ jobs:
 
       - name: Run tests
         run: pytest
+
+      - name: Generate error log
+        if: ${{ failure() && github.event.inputs.log_errors == 'true' }}
+        run: echo "Tests failed. Generating log file..." > error.log
+
+      - name: Upload error log artifact
+        if: ${{ failure() && github.event.inputs.log_errors == 'true' }}
+        uses: actions/upload-artifact@v3
+        with:
+          name: error-log
+          path: error.log
 
   build:
     runs-on: ubuntu-latest
