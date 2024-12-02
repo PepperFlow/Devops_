@@ -3,4 +3,5 @@ WORKDIR /app
 COPY . .
 RUN pip install --no-cache-dir -r requirements.txt
 EXPOSE 5000
-CMD ["python", "main.py"]
+CMD ["python", "main.py", "run", "--host=0.0.0.0", "--port=3000"]
+
