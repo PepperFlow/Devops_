@@ -13,12 +13,12 @@
         <button type="submit">Visa väder</button>
     </form>
 
-    <!-- Felmeddelande-->
+    
     {% if error %}
         <p style="color: red;">{{ error }}</p>
     {% endif %}
 
-    <!-- Väderinformation -->
+    
     {% if weather %}
         <p>Beskrivning: {{ weather.description }}</p>
         <p>Temperatur: {{ weather.temperature }}°C</p>
